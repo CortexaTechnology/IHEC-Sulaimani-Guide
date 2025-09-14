@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ڕێبەری ناوەندەکانی تۆمارکردن - IHEC</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="cursor-glow"></div>
+
+    <div class="page-container">
+        
+        <header class="main-header">
+            <div class="header-content">
+                <a href="#" class="logo-link">
+                    <img src="assets/images/IHEC-Logo.png" alt="IHEC Logo" class="header-logo">
+                    <span>کۆمیسیۆن</span>
+                </a>
+                
+                <div class="header-actions">
+                     <a href="https://linkbio.co/HoshyarHussein" target="_blank" class="logo-link cortexa-logo-link">
+                        <img src="assets/images/Cortexa-LogoBlue.png" alt="Cortexa Logo" class="header-logo logo-light">
+                        <img src="assets/images/Cortexa-LogoWhite.png" alt="Cortexa Logo" class="header-logo logo-dark">
+                        <span>Cortexa</span>
+                    </a>
+                    <button id="theme-toggle" class="theme-toggle-btn" title="گۆڕینی دۆخ">
+                        <i class="fa-solid fa-moon" id="theme-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            
+            <section class="title-section">
+                <h1>ڕێبەری ناوەندەکانی تۆمارکردن</h1>
+                <p>سیستەمێکی زیرەک بۆ گەڕان و فلتەرکردنی ناوەندەکان</p>
+            </section>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <p>کۆی ناوەندەکان</p>
+                        <h3 id="total-centers-stat">0</h3>
+                    </div>
+                    <i class="fa-solid fa-layer-group stat-icon"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <p>ئەنجامی گەڕان</p>
+                        <h3 id="filtered-centers-stat">0</h3>
+                    </div>
+                    <i class="fa-solid fa-search-location stat-icon"></i>
+                </div>
+                <div class="stat-card">
+                     <div class="stat-content">
+                        <p>ژمارەی ناوچەکان</p>
+                        <h3 id="total-districts-stat">0</h3>
+                    </div>
+                    <i class="fa-solid fa-map-signs stat-icon"></i>
+                </div>
+            </section>
+
+            <section class="filter-card">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-search input-icon"></i>
+                    <input type="text" id="searchInput" placeholder="گەڕان...">
+                </div>
+                <div class="custom-dropdown-wrapper">
+                    <div class="custom-dropdown-selected" id="custom-dropdown-toggle">
+                        <i class="fa-solid fa-filter input-icon"></i>
+                        <span id="selected-district-text">هەموو ناوچەکان</span>
+                        <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <div class="custom-dropdown-options" id="custom-dropdown-options">
+                        <!-- Options will be added by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <div id="results-placeholder"></div>
+            <section id="results-container">
+                <!-- ئەنجامەکان لێرەدا پیشان دەدرێن -->
+            </section>
+            
+        </main>
+
+        <footer class="main-footer">
+             <div class="footer-credits">
+                <p>پەرەپێدان و دیزاین لەلایەن</p>
+                <h3>Hoshyar Hussein Mohammed</h3>
+                <div class="social-links">
+                    <a href="https://linkbio.co/HoshyarHussein" target="_blank" title="Linktree"><i class="fa-solid fa-link"></i></a>
+                    <a href="https://www.facebook.com/share/16xbqsC3Lg/" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/cortexatech" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@cortexatech" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.snapchat.com/add/cortexatech" target="_blank" title="Snapchat"><i class="fa-brands fa-snapchat"></i></a>
+                    <a href="https://t.me/CortexaTech" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="https://www.youtube.com/@Cortexa-Technology" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 IHEC Centers Database</p>
+                <span>V 5.1</span>
+            </div>
+        </footer>
+        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
