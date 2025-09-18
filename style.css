@@ -9,6 +9,7 @@
     --border-color: #e5e7eb;
     --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --border-radius: 1rem;
+    --success-color: #16a34a;
 }
 
 body.dark-mode {
@@ -20,6 +21,7 @@ body.dark-mode {
     --background-color: #030712;
     --card-background: #111827;
     --border-color: #374151;
+    --success-color: #22c55e;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,9 +37,9 @@ body {
     overflow-x: hidden;
 }
 
+
 #cursor-glow {
-    position: fixed; left: 0; top: 0;
-    width: 600px; height: 600px;
+    position: fixed; left: 0; top: 0; width: 600px; height: 600px;
     border-radius: 50%;
     background: radial-gradient(circle, var(--glow-color) 0%, transparent 60%);
     pointer-events: none; z-index: -1;
@@ -70,8 +72,17 @@ body.dark-mode .logo-dark { display: block; }
 }
 .theme-toggle-btn:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--glow-color); }
 
+/* --- View Switcher --- */
+.view-switcher { display: flex; justify-content: center; margin-bottom: 2.5rem; background-color: var(--card-background); border-radius: 99px; padding: 0.5rem; border: 1px solid var(--border-color); }
+.view-btn { flex: 1; padding: 0.75rem 1.5rem; border-radius: 99px; border: none; background-color: transparent; color: var(--text-light); font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.3s ease; }
+.view-btn.active { background-color: var(--primary-color); color: white; box-shadow: 0 4px 15px var(--glow-color); }
+.view { display: none; animation: fadeIn 0.6s ease; }
+.view.active-view { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
 /* Main Content */
-.main-content { padding-top: 2rem; }
+.main-content { padding-top: 1rem; }
 .title-section { text-align: center; margin-bottom: 2.5rem; }
 .title-section h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 700; color: var(--text-dark); }
 .title-section p { color: var(--text-light); font-size: 1.1rem; margin-top: 0.5rem; }
@@ -94,26 +105,23 @@ body.dark-mode .logo-dark { display: block; }
 
 /* Filter Card */
 .filter-card {
-    display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;
+    display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;
     background-color: var(--card-background); border: 1px solid var(--border-color);
     border-radius: var(--border-radius); padding: 1.5rem; box-shadow: var(--shadow);
-    align-items: stretch; /* CHARÄSARY YEKEM */
+    align-items: stretch;
 }
-
-.search-input-wrapper {
-    position: relative;
-}
-
-.input-icon { position: absolute; top: 50%; transform: translateY(-50%); right: 1rem; color: var(--text-light); pointer-events: none; }
-
+.search-input-wrapper { position: relative; }
+.input-icon { position: absolute; top: 50%; transform: translateY(-50%); color: var(--text-light); pointer-events: none; }
+.search-input-wrapper .input-icon { left: 1rem; right: auto; }
 input {
-    width: 100%; padding: 0.8rem 2.75rem 0.8rem 1rem;
+    width: 100%; padding: 0.8rem 1rem 0.8rem 2.75rem;
     border: 1px solid var(--border-color);
     border-radius: 0.75rem; font-family: inherit; font-size: 1rem;
     background-color: var(--background-color); color: var(--text-dark);
 }
 input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 10px var(--glow-color); }
 ::placeholder { color: var(--text-light); opacity: 0.8; }
+.filter-card .search-input-wrapper.full-width { grid-column: 1 / -1; }
 
 /* Custom Dropdown */
 .custom-dropdown-wrapper { position: relative; }
@@ -123,7 +131,7 @@ input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0
     border-radius: 0.75rem; cursor: pointer; user-select: none;
 }
 .custom-dropdown-wrapper.active .custom-dropdown-selected { border-color: var(--primary-color); box-shadow: 0 0 10px var(--glow-color); }
-.custom-dropdown-selected span { flex-grow: 1; text-align: right; padding-right: 2rem; color: var(--text-dark); }
+.custom-dropdown-selected span { flex-grow: 1; text-align: right; color: var(--text-dark); }
 .dropdown-arrow { margin-left: auto; transition: transform 0.3s ease; color: var(--text-light); }
 .custom-dropdown-wrapper.active .dropdown-arrow { transform: rotate(180deg); }
 .custom-dropdown-options {
@@ -137,30 +145,83 @@ input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0
 .custom-dropdown-wrapper.active .custom-dropdown-options { opacity: 1; visibility: visible; transform: translateY(0); }
 .custom-dropdown-option { padding: 0.75rem 1.5rem; cursor: pointer; color: var(--text-light); }
 .custom-dropdown-option:hover, .custom-dropdown-option.selected { background-color: var(--primary-light); color: var(--primary-color); }
-
-/* --- CHARÄSARY DWAM --- */
-input,
-.custom-dropdown-selected {
-    height: 100%;
-}
+input, .custom-dropdown-selected { height: 100%; }
 
 /* Results */
-#results-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-#results-placeholder { text-align: center; color: var(--text-light); padding: 3rem 1rem; font-size: 1.1rem; }
-.result-card {
-    border: 1px solid transparent; border-radius: var(--border-radius); padding: 1.25rem;
+.placeholder-text { text-align: center; color: var(--text-light); padding: 3rem 1rem; font-size: 1.1rem; }
+#results-container, #lottery-results-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+.result-card, .lottery-result-card {
+    border: 1px solid transparent; border-radius: var(--border-radius);
     background-color: var(--card-background); box-shadow: var(--shadow);
     opacity: 0; animation: slideInUp 0.5s ease forwards;
     position: relative; overflow: hidden;
 }
-.result-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: var(--border-radius); border: 1px solid var(--primary-color); opacity: 0; transition: opacity 0.4s ease; }
-.result-card:hover::before { opacity: 1; }
+.result-card:hover, .lottery-result-card:hover { transform: translateY(-5px); box-shadow: 0 0 15px var(--glow-color); }
+.result-card::before, .lottery-result-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: var(--border-radius); border: 1px solid var(--primary-color); opacity: 0; transition: opacity 0.4s ease; }
+.result-card:hover::before, .lottery-result-card:hover::before { opacity: 1; }
+@keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Guide Result Card */
+.result-card { padding: 1.25rem; }
 .result-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 0.75rem; }
 .result-card-header h3 { font-size: 1.1rem; color: var(--text-dark); font-weight: 600; }
 .result-card .number-badge { background-color: var(--primary-light); color: var(--primary-color); padding: 0.2rem 0.7rem; border-radius: 99px; font-weight: 600; font-size: 0.8rem; flex-shrink: 0; }
+.info-block { margin-bottom: 0.75rem; }
+.info-block:last-child { margin-bottom: 0; }
 .info-block strong { font-size: 0.8rem; color: var(--primary-color); display: block; margin-bottom: 0.25rem; font-weight: 600; }
 .info-block span { font-size: 0.95rem; color: var(--text-light); }
-@keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Lottery Result Card (UPDATED) --- */
+#lottery-results-container { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.5rem; 
+}
+.lottery-result-card {
+    padding: 0; /* Remove padding to allow header to span full width */
+    display: flex;
+    flex-direction: column;
+}
+.lottery-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-light);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.lottery-result-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.lottery-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem 1.5rem;
+    padding: 1.5rem;
+}
+.lottery-info-item strong { 
+    display: block; 
+    font-size: 0.8rem; 
+    color: var(--text-light);
+    margin-bottom: 0.25rem; 
+    font-weight: 500;
+}
+.lottery-info-item span { 
+    font-size: 1rem; 
+    font-weight: 600;
+    color: var(--text-dark); 
+}
+.result-tag { 
+    background-color: var(--success-color); 
+    color: white; 
+    padding: 0.3rem 0.8rem; 
+    border-radius: 99px; 
+    font-size: 0.9rem; 
+    font-weight: 600;
+    display: inline-block; 
+}
 
 /* Footer */
 .main-footer { text-align: center; margin-top: 3rem; }
@@ -176,11 +237,90 @@ input,
     border-radius: 50%; text-decoration: none;
     transition: all 0.3s ease;
 }
-.social-links a:hover {
-    color: var(--primary-color); border-color: var(--primary-color);
-    transform: translateY(-3px); box-shadow: 0 0 10px var(--glow-color);
-}
+.social-links a:hover { color: var(--primary-color); border-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 0 10px var(--glow-color); }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-light); padding: 1rem 0; border-top: 1px solid var(--border-color); }
+
+/* ================================================= */
+/* --- Lottery Filter Card Specific Styles --- */
+/* ================================================= */
+
+#lottery-filter-card {
+    display: flex; /* Use flexbox to manage rows */
+    flex-direction: column; /* Stack filter rows vertically */
+    gap: 1rem; /* Space between the rows */
+}
+
+.filter-row {
+    display: grid;
+    gap: 1rem;
+    align-items: stretch; /* Make all items in a row equal height */
+}
+
+/* First row: Search, Sort, Reset */
+#lottery-filter-card .filter-row:first-of-type {
+    grid-template-columns: 2fr 1fr auto; /* Distribute space (2 parts for search, 1 for sort) */
+}
+
+/* Second row: The four dropdown filters */
+#secondary-filters {
+    grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+}
+
+/* Styling for the new reset button */
+.reset-btn {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    height: 100%;
+    padding: 0 1.2rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 0 10px var(--glow-color);
+}
+
+/* ================================================= */
+/* --- Lottery Results Header Styling --- */
+/* ================================================= */
+
+.results-header {
+    margin-top: 2rem; /* Add space above the header */
+    margin-bottom: 0.5rem; /* Reduce space below it */
+    text-align: right; /* Align to the right for RTL */
+}
+
+.results-header h3 {
+    display: inline-block; /* Allow padding and background without taking full width */
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    padding: 0.6rem 1.25rem;
+    border-radius: 99px; /* Make it a pill shape */
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid transparent; /* Optional: for consistency */
+    transition: all 0.3s ease;
+}
+
+/* Responsive adjustments for lottery filters */
+@media (max-width: 992px) {
+    #secondary-filters {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Stack all controls in a single column on mobile */
+    #lottery-filter-card .filter-row:first-of-type,
+    #secondary-filters {
+        grid-template-columns: 1fr;
+    }
+}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -190,4 +330,9 @@ input,
 }
 @media (max-width: 480px) {
     .header-content { flex-direction: column; gap: 1rem; }
+    .lottery-result-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
 }
